@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {DispatchContext, StateContext, reducer, initialState} from "./store";
+import HomePage from "./HomePage";
+import LoginPage from "./LoginPage";
 
 function App() {
+  const [state, dispatch] = React.useReducer(reducer, initialState)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <DispatchContext.Provider value={dispatch}>
+      <StateContext.Provider value={state}>
+        <div>
+          {state.location === 'home' && <HomePage />}
+          {state.location === 'login' && <LoginPage />}
+        </div>
+      </StateContext.Provider>
+    </DispatchContext.Provider>
+  )
 }
 
 export default App;
